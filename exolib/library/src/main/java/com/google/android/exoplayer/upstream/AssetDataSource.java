@@ -19,10 +19,14 @@ import com.google.android.exoplayer.C;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.util.Log;
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * A local asset {@link UriDataSource}.
@@ -70,13 +74,19 @@ public final class AssetDataSource implements UriDataSource {
     try {
       uriString = dataSpec.uri.toString();
       String path = dataSpec.uri.getPath();
-      if (path.startsWith("/android_asset/")) {
+      Log.i("Aman",path.toString());
+      Log.i("Aman",uriString);
+      /*if (path.startsWith("/android_asset/")) {
         path = path.substring(15);
       } else if (path.startsWith("/")) {
         path = path.substring(1);
-      }
+      }*/
       uriString = dataSpec.uri.toString();
-      inputStream = assetManager.open(path, AssetManager.ACCESS_RANDOM);
+      URL url=new URL(uriString);
+      URLConnection urlConnection=url.openConnection();
+      inputStream=urlConnection.getInputStream();
+      Log.i("Aman ", "done");
+      //inputStream = assetManager.open(path, AssetManager.ACCESS_RANDOM);
       long skipped = inputStream.skip(dataSpec.position);
       if (skipped < dataSpec.position) {
         // assetManager.open() returns an AssetInputStream, whose skip() implementation only skips

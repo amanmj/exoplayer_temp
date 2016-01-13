@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/exolib/exolib.iml" filepath="$PROJECT_DIR$/exolib/exolib.iml" />
       <module fileurl="file://$PROJECT_DIR$/exoplayer_temp.iml" filepath="$PROJECT_DIR$/exoplayer_temp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/library/library.iml" filepath="$PROJECT_DIR$/app/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exolib/library/library.iml" filepath="$PROJECT_DIR$/exolib/library/library.iml" />
     </modules>
   </component>
 </project>
