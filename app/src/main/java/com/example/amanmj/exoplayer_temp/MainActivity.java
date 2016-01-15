@@ -37,9 +37,10 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
     public static ExoPlayer exo;
-
+    private File file;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String url="http://dl.enjoypur.vc/upload_file/5570/6757/%20Bollywood%20Hindi%20Mp3%20Songs%202015/Hate%20Story%203%20(2015)%20Mp3%20Songs/03%20Wajah%20Tum%20Ho%20-%20Hate%20Story%203%20%28Armaan%20Malik%29%20190Kbps.mp3";
+        //String url="http://dl.enjoypur.vc/upload_file/5570/6757/%20Bollywood%20Hindi%20Mp3%20Songs%202015/Hate%20Story%203%20(2015)%20Mp3%20Songs/03%20Wajah%20Tum%20Ho%20-%20Hate%20Story%203%20%28Armaan%20Malik%29%20190Kbps.mp3";
 
         //exoplayer code
         exo= ExoPlayer.Factory.newInstance(1);
@@ -55,17 +56,8 @@ public class MainActivity extends AppCompatActivity {
         //m.execute(url);
         //DataSource dataSource = new AssetDataSource(getApplicationContext());
         //ExtractorSampleSource extractorSampleSource = new ExtractorSampleSource(Uri.parse(url), dataSource, new DefaultAllocator(64 * 1024), 64 * 1024 * 256);
-        File f=new File(Environment.getExternalStorageDirectory(),"song.mp3");
-        if(f.exists())
-        {
-            Log.i("Aman","exisits");
-        }
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Log.i("Aman","thread exception");
-            e.printStackTrace();
-        }
+        //File f=new File(Environment.getExternalStorageDirectory(),"song.mp3");
+
         /*try {
             FileInputStream fileInputStream=new FileInputStream(f);
             FileDescriptor fd=fileInputStream.getFD();
@@ -75,12 +67,32 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }*/
-        Log.i("Aman","size of file= "+f.length());
 
 
         //TrackRenderer audio = new MediaCodecAudioTrackRenderer(extractorSampleSource, null, true);
         //exo.prepare(audio);
+        file=new File(Environment.getExternalStorageDirectory(),"song.mp3");
+        if(file.exists()==false)
+        {
+           Log.i("Aman","file exists");
+        }
+        DataSource dataSource=new myDataSource(file.length());
+        ExtractorSampleSource extractorSampleSource=new ExtractorSampleSource(Uri.parse("song.mp3"),dataSource,new DefaultAllocator(64*1024),64*1024*256);
+        TrackRenderer audio=new MediaCodecAudioTrackRenderer(extractorSampleSource,null,true);
         Log.i("Aman","reached end");
+        Log.i("Aman","length of file= "+file.length());
+        try {
+            Thread.sleep(1000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        exo.prepare(audio);
         exo.setPlayWhenReady(true);
+        Log.i("Aman","exoplayer length="+exo.getDuration());
+
     }
+    /*@Override
+    public long getAvailableBytes() {
+        return file.length();
+    }*/
 }
